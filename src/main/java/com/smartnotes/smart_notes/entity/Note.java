@@ -1,34 +1,34 @@
 package com.smartnotes.smart_notes.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users")
+@Table(name="notes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
 
+public class Note {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false,length=100)
-    private String name;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id",nullable=false)
+    private User user;
 
-    @Column(nullable=false,length=100,unique=true)
-    private String email;
+    @Column(nullable=false,length=255)
+    private String title;
 
-    @Column(nullable=false,length=20)
-    private String password;
+    @Column(nullable=false,columnDefinition="TEXT")
+    private String summary;
 
     @Column(name="created_at",insertable=false,updatable=false)
     private LocalDateTime createdAt;
 
     @Column(name="updated_at",insertable=false,updatable=false)
     private LocalDateTime updatedAt;
-    
 }
